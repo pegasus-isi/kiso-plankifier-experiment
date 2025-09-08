@@ -1,3 +1,5 @@
+Plankton are effective indicators of environmental change and ecosystem health in freshwater habitats, but collection of plankton data using manual microscopic methods is extremely labor-intensive and expensive. Automated plankton imaging offers a promising way forward to monitor plankton communities with high frequency and accuracy in real-time. Yet, manual annotation of millions of images proposes a serious challenge to taxonomists. Deep learning classifiers have been successfully applied here to categorize marine plankton images. The Kiso experiment runs a plankton classification workflow.
+
 # Getting Started
 
 ## Prerequisites
