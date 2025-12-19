@@ -1,18 +1,20 @@
 name: plankifier-experiment
-condor:
-  central-manager:
-    roles:
-      - central-manager
-  submit:
-    roles:
-      - submit
-  execute-1:
-    roles:
-      - execute-cloud
-  execute-2:
-    roles:
-      - execute-edge
-    config-file: config/execute.conf
+
+deployment:
+  htcondor:
+    - kind: central-manager
+      labels:
+        - central-manager
+    - kind: submit
+      labels:
+        - submit
+    - kind: execute
+      labels:
+        - execute-cloud
+    - kind: execute
+      labels:
+        - execute-edge
+      config-file: config/execute.conf
 
 sites:
   - kind: chameleon-edge
@@ -21,7 +23,7 @@ sites:
     rc_file: secrets/edge-app-cred-oac-edge-openrc.sh
     resources:
       machines:
-        - roles:
+        - labels:
             - execute-edge
           machine_name: raspberrypi4-64
           count: 1
@@ -37,7 +39,7 @@ sites:
     image: CC-Ubuntu18.04
     resources:
       machines:
-        - roles:
+        - labels:
             - central-manager
             - submit
             - execute-cloud
@@ -52,28 +54,28 @@ experiments:
     name: plankifier-experiment
     count: 1
     main: ./workflow.py
-    submit-node-roles:
+    submit_node_labels:
       - submit
     inputs:
-      - roles:
+      - labels:
           - execute-edge
         src: bin/train.py
         dst: /srv/plankifier/
-      - roles:
+      - labels:
           - execute-edge
         src: bin/predict.py
         dst: /srv/plankifier/
     setup:
-      - roles:
+      - labels:
           - submit
         script: |
           chmod +x workflow.py
-      - roles:
+      - labels:
           - execute-edge
         script: |
           chmod +x /srv/plankifier/train.py /srv/plankifier/predict.py
     outputs:
-      - roles:
+      - labels:
           - submit
         src: ~kiso/kiso-plankifier-experiment/output/count.txt
         dst: ./
