@@ -14,7 +14,7 @@ deployment:
     - kind: execute
       labels:
         - execute-edge
-      config-file: config/execute.conf
+      config_file: config/execute.conf
 
 sites:
   - kind: chameleon-edge
@@ -54,6 +54,7 @@ experiments:
     name: plankifier-experiment
     count: 1
     main: ./workflow.py
+    timeout: 3600
     submit_node_labels:
       - submit
     inputs:
