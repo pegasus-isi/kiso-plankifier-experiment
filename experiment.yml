@@ -70,11 +70,11 @@ experiments:
       - labels:
           - submit
         script: |
-          chmod +x workflow.py
+          sudo chmod +x workflow.py
       - labels:
           - execute-edge
         script: |
-          chmod +x /srv/plankifier/train.py /srv/plankifier/predict.py
+          sudo chmod +x /srv/plankifier/train.py /srv/plankifier/predict.py
     outputs:
       - labels:
           - submit
