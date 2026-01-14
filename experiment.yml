@@ -71,6 +71,12 @@ experiments:
           - submit
         script: |
           sudo chmod +x workflow.py
+
+          echo "Condor Q"
+          condor_q
+
+          echo "Condor Status"
+          condor_status
       - labels:
           - execute-edge
         script: |
