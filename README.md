@@ -1,49 +1,75 @@
-Plankton are effective indicators of environmental change and ecosystem health in freshwater habitats, but collection of plankton data using manual microscopic methods is extremely labor-intensive and expensive. Automated plankton imaging offers a promising way forward to monitor plankton communities with high frequency and accuracy in real-time. Yet, manual annotation of millions of images proposes a serious challenge to taxonomists. Deep learning classifiers have been successfully applied here to categorize marine plankton images. The Kiso experiment runs a plankton classification workflow.
+# Kiso Plankifier Experiment
 
-# Getting Started
+> A plankton classification workflow that automates image annotation using deep learning,
+> running on distributed infrastructure via Pegasus and Chameleon Cloud.
+
+Plankton are effective indicators of ecosystem health, but manual microscopic annotation
+of images is labor-intensive at scale. This experiment runs an end-to-end deep learning
+classification workflow over automated plankton images using the [Kiso](https://github.com/pegasus-isi/kiso)
+framework.
 
 ## Prerequisites
 
+- Python 3.9+
+- Access to [CHI@Edge](https://chameleoncloud.org) and [CHI@TACC](https://chameleoncloud.org) (Chameleon Cloud accounts)
+
 ```sh
 pip install kiso
-pip install kiso[chameleon]
+pip install kiso[chameleon]  # required for Chameleon Cloud provisioning
 ```
 
-## Running the experiment
+## Configuration
 
-Create application credentials for CHI@Edge as `edge-app-cred-oac-edge-openrc.sh` and CHI@TACC as `tacc-app-cred-oac-edge-openrc.sh`
-and place the files in the `secrets` directory.
+Create application credentials for CHI@Edge and CHI@TACC and place them in the `secrets/` directory:
 
-## Running the experiment
+```
+secrets/
+  edge-app-cred-oac-edge-openrc.sh   # CHI@Edge credentials
+  tacc-app-cred-oac-edge-openrc.sh   # CHI@TACC credentials
+```
+
+See [Chameleon Cloud docs](https://chameleoncloud.org/docs) for how to generate application credentials.
+
+## Running the Experiment
 
 ```sh
-# Check Kiso experiment configuration
+# Validate the experiment configuration
 kiso check
 
-# Provision and setup the resources
+# Provision and set up resources
 kiso up
 
-# Run the experiments defined in the experiment configuration YAML file
+# Run the experiment
 kiso run
 
-# Destroy the provisioned resources
-kiso down
+# Check the output
+cat count.txt
 
-# Pegasus workflow submit directories will be placed in the output directory at the end of the experiment. The submit directories will also have a statistics directory with the pegasus-statistics output.
-# Outputs defined in the experiment configuration will be placed in the destination specified in the experiment configuration.
+# Tear down provisioned resources
+kiso down
 ```
 
-# References
+## Outputs
 
-- [Pegasus Workflow Management System](https://pegasus.isi.edu)
-- [EnOSlib](https://discovery.gitlabpages.inria.fr/enoslib/)
-- [Chameleon Cloud](https://www.chameleoncloud.org)
-- [FABRIC](https://portal.fabric-testbed.net)
+Pegasus workflow submit directories are written to the `output/` directory when the experiment completes.
+Each submit directory includes a `statistics/` subdirectory with `pegasus-statistics` output.
+Additional outputs are placed at the destinations specified in `experiment.yml`.
 
-# Citation
+## References
 
-- [Kyathanahally, S. P., Hardeman, T., Merz, E., Bulas, T., Reyes, M., Isles, P., Pomati, F., & Baity-Jesi, M. (2021). Deep Learning Classification of Lake Zooplankton. Frontiers in Microbiology, 12.](https://doi.org/10.3389/fmicb.2021.746297)
+- [Pegasus Workflow Management System](https://pegasus.isi.edu) — scientific workflow engine used to define and execute experiments in Kiso
+- [EnOSlib](https://discovery.gitlabpages.inria.fr/enoslib/) — infrastructure management library that Kiso builds on for provisioning and remote execution
+- [Chameleon Cloud](https://www.chameleoncloud.org) — NSF-funded cloud testbed supported by Kiso
+- [FABRIC](https://portal.fabric-testbed.net) — nationwide programmable research infrastructure supported by Kiso
 
-# Acknowledgements
+## Citation
 
-Kiso is funded by National Science Foundation (NSF) under award [2403051](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2403051).
+Kyathanahally et al. (2021). [Deep Learning Classification of Lake Zooplankton](https://doi.org/10.3389/fmicb.2021.746297). *Frontiers in Microbiology, 12*.
+
+## Acknowledgements
+
+Kiso is funded by the National Science Foundation (NSF) under award [2403051](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2403051).
+
+## License
+
+Apache 2.0 © [Pegasus ISI](https://github.com/pegasus-isi)

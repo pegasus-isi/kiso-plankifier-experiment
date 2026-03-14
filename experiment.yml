@@ -18,12 +18,13 @@ deployment:
 
 sites:
   - kind: chameleon-edge
-    walltime: "04:00:00"
+    walltime: "02:00:00"
     lease_name: edge-lease
     rc_file: secrets/edge-app-cred-oac-edge-openrc.sh
     resources:
       machines:
         - labels:
+            - submit
             - execute-edge
           machine_name: raspberrypi4-64
           count: 1
@@ -32,7 +33,7 @@ sites:
             image: pegasus/plankifier
 
   - kind: chameleon
-    walltime: "04:00:00"
+    walltime: "02:00:00"
     lease_name: tacc-lease
     rc_file: secrets/tacc-app-cred-oac-edge-openrc.sh
     key_name: mayani-mac-mini
@@ -40,14 +41,45 @@ sites:
     resources:
       machines:
         - labels:
-            - central-manager
+            #- central-manager
             - submit
             - execute-cloud
           flavour: compute_zen3
           number: 1
           image: CC-Ubuntu22.04
+        - labels:
+            - submit
+            - execute-edge
+          flavour: compute_zen3
+          number: 1
+          image: CC-Ubuntu22.04
       networks:
         - sharednet1
+
+  - kind: fabric
+    rc_file: secrets/fabric_rc
+    walltime: "2:00:00"
+    name_prefix: process
+    resources:
+      machines:
+        # Get IPv4 Management IP
+        - labels:
+            - submit
+            - central-manager
+            - execute-cloud
+          site: UCSD
+          image: default_rocky_8
+          flavour: big
+          number: 1
+      networks:
+        - labels:
+            - v4
+          name: one
+          kind: FABNetv4
+          site: UCSD
+          nic:
+            kind: SmartNIC
+            model: ConnectX-5
 
 experiments:
   - kind: pegasus
