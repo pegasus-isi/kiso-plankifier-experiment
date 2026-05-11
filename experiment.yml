@@ -19,7 +19,7 @@ deployment:
 sites:
   - kind: chameleon-edge
     walltime: "02:00:00"
-    lease_name: edge-lease
+    lease_name: edge-lease-plankifier
     rc_file: secrets/edge-app-cred-oac-edge-openrc.sh
     resources:
       machines:
@@ -34,7 +34,7 @@ sites:
 
   - kind: chameleon
     walltime: "02:00:00"
-    lease_name: tacc-lease
+    lease_name: tacc-lease-plankifier
     rc_file: secrets/tacc-app-cred-oac-edge-openrc.sh
     key_name: mayani-mac-mini
     image: CC-Ubuntu18.04
@@ -59,7 +59,7 @@ sites:
   - kind: fabric
     rc_file: secrets/fabric_rc
     walltime: "2:00:00"
-    name_prefix: process
+    name_prefix: fabric-plankifier
     resources:
       machines:
         # Get IPv4 Management IP
