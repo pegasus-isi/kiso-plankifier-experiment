@@ -68,7 +68,7 @@ sites:
             - central-manager
             - execute-cloud
           site: UCSD
-          image: default_rocky_8
+          image: default_rocky_9
           flavour: big
           number: 1
       networks:
