@@ -24,7 +24,6 @@ sites:
     resources:
       machines:
         - labels:
-            - submit
             - execute-edge
           machine_name: raspberrypi4-64
           count: 1
@@ -41,45 +40,14 @@ sites:
     resources:
       machines:
         - labels:
-            #- central-manager
+            - central-manager
             - submit
             - execute-cloud
-          flavour: compute_zen3
-          number: 1
-          image: CC-Ubuntu22.04
-        - labels:
-            - submit
-            - execute-edge
           flavour: compute_zen3
           number: 1
           image: CC-Ubuntu22.04
       networks:
         - sharednet1
-
-  - kind: fabric
-    rc_file: secrets/fabric_rc
-    walltime: "2:00:00"
-    name_prefix: fabric-plankifier
-    resources:
-      machines:
-        # Get IPv4 Management IP
-        - labels:
-            - submit
-            - central-manager
-            - execute-cloud
-          site: UCSD
-          image: default_rocky_9
-          flavour: big
-          number: 1
-      networks:
-        - labels:
-            - v4
-          name: one
-          kind: FABNetv4
-          site: UCSD
-          nic:
-            kind: SmartNIC
-            model: ConnectX-5
 
 experiments:
   - kind: pegasus
